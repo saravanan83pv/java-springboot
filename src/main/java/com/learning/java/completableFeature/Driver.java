@@ -1,0 +1,23 @@
+package com.learning.java.completableFeature;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
+
+public class Driver {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        Supplier<String> task1 = ()-> new LibraryBook("ps",1000).call();
+        Supplier<String> task2 = ()-> new LibraryBook("tesla",200).call();
+
+        CompletableFuture<String> supply=CompletableFuture.supplyAsync(task1).thenCombine(CompletableFuture.supplyAsync(task2), (result1 , result2)->result1+result2);
+        System.out.println(supply.get());
+
+              //  thenCombine(CompletableFuture.supplyAsync(task2), (result1 , result2)->result1+result2).
+             //   thenApply(data-> data.toUpperCase()).
+            //    exceptionally((t)-> t.getLocalizedMessage()).
+          //      thenAccept(data->System.out.println(data));
+
+    }
+
+
+}
